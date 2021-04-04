@@ -1,0 +1,13 @@
+.vsconfig
+.vscode
+
+_Build_*
+
+Library
+Logs
+obj
+Temp
+UserSettings
+Assembly-CSharp.csproj
+*.sln
+/*.csproj

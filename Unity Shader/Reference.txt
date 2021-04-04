@@ -1,0 +1,70 @@
+#  (廣東話, Cantonese) [簡單黎講 C++]
+
+簡單黎講 C++ - Unity Shader
+廣東話 C++ 教學系列 https://www.youtube.com/channel/UCWW9g_90Ik1U8ULNG5PvoYQ
+
+facebook page
+https://www.facebook.com/%E7%B0%A1%E5%96%AE%E9%BB%8E%E8%AC%9B-C-Plus-Plus-319894615140227
+
+歡迎留言 詢問關於 C++ 問題
+
+Example Source Code / Unity Project:
+	https://github.com/SimpleTalkCpp/SimpleTalkCpp_Tutorial/tree/master/Graphic/UnityShader
+
+Reference:		
+	The OpenGL® Programming Guide (Red Book)
+	- pdf
+		https://www.ics.uci.edu/~gopi/CS211B/opengl_programming_guide_8th_edition.pdf
+	- Hard copy
+		https://www.amazon.com/OpenGL-Programming-Guide-Official-Learning/dp/0134495497/ref=dp_ob_title_bk
+		ISBN-13: 978-0134495491
+
+	The Cg Tutorial
+		http://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter01.html
+	
+	Unity Shader Document
+		https://docs.unity3d.com/Manual/SL-ShaderPrograms.html
+		https://docs.unity3d.com/Manual/SL-UnityShaderVariables.html
+		https://docs.unity3d.com/Manual/SL-BuiltinFunctions.html
+		https://docs.unity3d.com/Manual/SL-BuiltinMacros.html
+	
+	Physically Based Rendering, Third Edition: From Theory to Implementation
+		http://www.pbrt.org/
+		https://www.amazon.com/Physically-Based-Rendering-Third-Implementation/dp/0128006455/ref=sr_1_1?ie=UTF8&qid=1511574718&sr=8-1&keywords=Physically+Based+Rendering
+		ISBN-13: 978-0128006450	
+	
+	Siggraph2010 - Water Flow in Portal2 by Alex Vlachos Valve
+		http://www.valvesoftware.com/publications/2010/siggraph2010_vlachos_waterflow.pdf
+	
+	Normal Transformation
+		https://paroj.github.io/gltut/Illumination/Tut09%20Normal%20Transformation.html
+	
+	Gaussian Kernel Calculator
+		- http://dev.theomader.com/gaussian-kernel-calculator/
+	
+	opengl-tutorial.org - Tutorial 16 : Shadow mapping
+		http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/
+
+	Real-Time Shadows 
+		https://www.amazon.com/Real-Time-Shadows-Elmar-Eisemann/dp/1568814380/ref=sr_1_1?ie=UTF8&qid=1514168370&sr=8-1&keywords=real+time+shadow
+		ISBN-13: 978-1568814384
+		
+	Quaternions
+		https://www.3dgep.com/understanding-quaternions/
+		https://www.essentialmath.com/GDC2013/GDC13_quaternions_final.pdf
+		https://en.wikipedia.org/wiki/Quaternion
+		https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation		
+		http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/geometric/axisAngle/index.htm
+		https://en.wikipedia.org/wiki/Slerp
+	
+	How GPU Works
+		https://www.cs.cmu.edu/afs/cs/academic/class/15462-f11/www/lec_slides/lec19.pdf
+	
+	Improve Batching Using Texture Atlases	
+		http://download.nvidia.com/developer/NVTextureSuite/Atlas_Tools/Texture_Atlas_Whitepaper.pdf
+		
+	Alpha Blending: To Pre or Not To Pre from nVidia
+		https://developer.nvidia.com/content/alpha-blending-pre-or-not-pre
+	
+tags:
+	廣東話 C++ 教學, 簡單黎講 C++, C++ in Cantonese, Unity, Shader, 廣東話 程式設計

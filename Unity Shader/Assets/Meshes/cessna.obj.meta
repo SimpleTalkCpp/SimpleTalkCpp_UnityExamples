@@ -1,0 +1,461 @@
+fileFormatVersion: 2
+guid: 00937e32ee7ef5a4ab2b23ec05774a29
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: access
+    100002: access2
+    100004: access4
+    100006: access5
+    100008: ahandles
+    100010: antanea
+    100012: cargo
+    100014: cargo2
+    100016: //RootNode
+    100018: deicing
+    100020: dglass
+    100022: door
+    100024: door2
+    100026: door2a
+    100028: elevator
+    100030: engine
+    100032: fins
+    100034: flaps
+    100036: flaps2
+    100038: fuselage
+    100040: fuslage2
+    100042: glass
+    100044: gtrim
+    100046: hub
+    100048: hub2
+    100050: intake
+    100052: nose
+    100054: prop
+    100056: prop2
+    100058: pstripe
+    100060: pstripe2
+    100062: rflaps
+    100064: rudder
+    100066: shroud
+    100068: tail
+    100070: vents
+    100072: vents2
+    100074: wings
+    400000: access
+    400002: access2
+    400004: access4
+    400006: access5
+    400008: ahandles
+    400010: antanea
+    400012: cargo
+    400014: cargo2
+    400016: //RootNode
+    400018: deicing
+    400020: dglass
+    400022: door
+    400024: door2
+    400026: door2a
+    400028: elevator
+    400030: engine
+    400032: fins
+    400034: flaps
+    400036: flaps2
+    400038: fuselage
+    400040: fuslage2
+    400042: glass
+    400044: gtrim
+    400046: hub
+    400048: hub2
+    400050: intake
+    400052: nose
+    400054: prop
+    400056: prop2
+    400058: pstripe
+    400060: pstripe2
+    400062: rflaps
+    400064: rudder
+    400066: shroud
+    400068: tail
+    400070: vents
+    400072: vents2
+    400074: wings
+    2300000: access
+    2300002: access2
+    2300004: access4
+    2300006: access5
+    2300008: ahandles
+    2300010: antanea
+    2300012: cargo
+    2300014: cargo2
+    2300016: deicing
+    2300018: dglass
+    2300020: door
+    2300022: door2
+    2300024: door2a
+    2300026: elevator
+    2300028: engine
+    2300030: fins
+    2300032: flaps
+    2300034: flaps2
+    2300036: fuselage
+    2300038: fuslage2
+    2300040: glass
+    2300042: gtrim
+    2300044: hub
+    2300046: hub2
+    2300048: intake
+    2300050: nose
+    2300052: prop
+    2300054: prop2
+    2300056: pstripe
+    2300058: pstripe2
+    2300060: rflaps
+    2300062: rudder
+    2300064: shroud
+    2300066: tail
+    2300068: vents
+    2300070: vents2
+    2300072: wings
+    3300000: access
+    3300002: access2
+    3300004: access4
+    3300006: access5
+    3300008: ahandles
+    3300010: antanea
+    3300012: cargo
+    3300014: cargo2
+    3300016: deicing
+    3300018: dglass
+    3300020: door
+    3300022: door2
+    3300024: door2a
+    3300026: elevator
+    3300028: engine
+    3300030: fins
+    3300032: flaps
+    3300034: flaps2
+    3300036: fuselage
+    3300038: fuslage2
+    3300040: glass
+    3300042: gtrim
+    3300044: hub
+    3300046: hub2
+    3300048: intake
+    3300050: nose
+    3300052: prop
+    3300054: prop2
+    3300056: pstripe
+    3300058: pstripe2
+    3300060: rflaps
+    3300062: rudder
+    3300064: shroud
+    3300066: tail
+    3300068: vents
+    3300070: vents2
+    3300072: wings
+    4300000: access
+    4300002: access2
+    4300004: access4
+    4300006: access5
+    4300008: ahandles
+    4300010: antanea
+    4300012: cargo
+    4300014: cargo2
+    4300016: deicing
+    4300018: dglass
+    4300020: door
+    4300022: door2
+    4300024: door2a
+    4300026: elevator
+    4300028: engine
+    4300030: fins
+    4300032: flaps
+    4300034: flaps2
+    4300036: fuselage
+    4300038: fuslage2
+    4300040: glass
+    4300042: gtrim
+    4300044: hub
+    4300046: hub2
+    4300048: intake
+    4300050: nose
+    4300052: prop
+    4300054: prop2
+    4300056: pstripe
+    4300058: pstripe2
+    4300060: rflaps
+    4300062: rudder
+    4300064: shroud
+    4300066: tail
+    4300068: vents
+    4300070: vents2
+    4300072: wings
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: access2Mat
+    second: {fileID: 2100000, guid: 048afdb835f67b545904ad208c91dde7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: access4Mat
+    second: {fileID: 2100000, guid: 00a324ff4ed44864a884f4b114f0c54f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: access5Mat
+    second: {fileID: 2100000, guid: 6787b6653a79d574d932f574cdb409ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: accessMat
+    second: {fileID: 2100000, guid: b5f391b005482d746891bdab6abac83b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ahandlesMat
+    second: {fileID: 2100000, guid: a3cf90149e6dbc54f8885a9020bcaa51, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: antaneaMat
+    second: {fileID: 2100000, guid: 79f770e4644e88f438f1105b987f8f8c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cargo2Mat
+    second: {fileID: 2100000, guid: e048196a923acbc42866e60626c2cbfb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cargoMat
+    second: {fileID: 2100000, guid: 6a01bec3501385447ac752d8967013dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: deicingMat
+    second: {fileID: 2100000, guid: f083ae9db1d471b45bd7423f2fe21d54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dglassMat
+    second: {fileID: 2100000, guid: 5d02cb7211339a545a18152f1ac603be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: door2Mat
+    second: {fileID: 2100000, guid: ccac599d11ac19748aa813ed1b6a5b08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: door2aMat
+    second: {fileID: 2100000, guid: cb0f8e648c05a4747b6018183ac32aad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: doorMat
+    second: {fileID: 2100000, guid: 4b5129139ed39c34d94c235206ec0cab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: elevatorMat
+    second: {fileID: 2100000, guid: 42a6b874f8e34ca42ad5f15d19a3c19d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: engineMat
+    second: {fileID: 2100000, guid: a3110f14d718aae4d9b82ad90c426b19, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: finsMat
+    second: {fileID: 2100000, guid: 9e61f74fa907ee5478957828ee8008a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: flaps2Mat
+    second: {fileID: 2100000, guid: df55933ca17e02b439c9493e6ddf22a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: flapsMat
+    second: {fileID: 2100000, guid: 9598cd71ca2fd254c91df79a081e6eea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fuselageMat
+    second: {fileID: 2100000, guid: b74c7da087319f9459597f86308117ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fuslage2Mat
+    second: {fileID: 2100000, guid: c39ab2ea01a6c124cb70abe736246a74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glassMat
+    second: {fileID: 2100000, guid: 416511c429c3a1244a913dac265511eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gtrimMat
+    second: {fileID: 2100000, guid: be61ee17f26131b4eb99286d40891d99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hub2Mat
+    second: {fileID: 2100000, guid: 4aeea1e421e238b47b6fffbfee504aec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hubMat
+    second: {fileID: 2100000, guid: e3b082703bd885b4a8bf36ca3059f309, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: intakeMat
+    second: {fileID: 2100000, guid: c4d307042f7830e429aa3844864c95f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: noseMat
+    second: {fileID: 2100000, guid: b58a35364d990ba45a443fc851ae1ba6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: prop2Mat
+    second: {fileID: 2100000, guid: 4779304bf59c11749a097812efe81daa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: propMat
+    second: {fileID: 2100000, guid: defad210a644aa54493a3d0b4f99057a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pstripe2Mat
+    second: {fileID: 2100000, guid: 3230c38eb7ccbb5429a10028899458f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pstripeMat
+    second: {fileID: 2100000, guid: ce81da461584d6646b9b68cbcb2d0abb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rflapsMat
+    second: {fileID: 2100000, guid: 0c9169b5273e5694c8a632d67fd54bd9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rudderMat
+    second: {fileID: 2100000, guid: 08c1309ff268edc4caf1e37600852ac7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shroudMat
+    second: {fileID: 2100000, guid: 644bffdd3e8ff92488ee9e3f58a59c64, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tailMat
+    second: {fileID: 2100000, guid: 3215f3071f6e77147b4ef6b8c3fc2bdc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vents2Mat
+    second: {fileID: 2100000, guid: 83f109face783504c87d80509180dd03, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ventsMat
+    second: {fileID: 2100000, guid: 8753fd07236cdbc4b8acee82a764dd84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wingsMat
+    second: {fileID: 2100000, guid: 8c9c83fae51c2d04d9c960f994344ec1, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

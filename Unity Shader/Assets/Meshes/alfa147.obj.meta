@@ -1,0 +1,177 @@
+fileFormatVersion: 2
+guid: f97ce45e252540f42ab057ac0cc31d58
+timeCreated: 1512097167
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Alfa-alu
+    100002: Alfa-logo
+    100004: Alfa-wheel-inside
+    100006: //RootNode
+    100008: Alfa_147.0Mtl
+    100010: Alfa_147.1Mtl
+    100012: Alfa_147.2Mtl
+    100014: Alfa_147.3Mtl
+    100016: Alfa_147.4Mtl
+    100018: Alfa_147.6Mtl
+    100020: Alfa_147.7Mtl
+    100022: Alfa_147.9Mtl
+    100024: Felge.2Mtl
+    100026: Felge.3Mtl
+    100028: Felge.4Mtl
+    100030: FelgeMtl
+    100032: FIAT_INTERIOR
+    100034: Reifen.2Mtl
+    100036: Reifen.3Mtl
+    100038: Reifen.4Mtl
+    100040: ReifenMtl
+    400000: Alfa-alu
+    400002: Alfa-logo
+    400004: Alfa-wheel-inside
+    400006: //RootNode
+    400008: Alfa_147.0Mtl
+    400010: Alfa_147.1Mtl
+    400012: Alfa_147.2Mtl
+    400014: Alfa_147.3Mtl
+    400016: Alfa_147.4Mtl
+    400018: Alfa_147.6Mtl
+    400020: Alfa_147.7Mtl
+    400022: Alfa_147.9Mtl
+    400024: Felge.2Mtl
+    400026: Felge.3Mtl
+    400028: Felge.4Mtl
+    400030: FelgeMtl
+    400032: FIAT_INTERIOR
+    400034: Reifen.2Mtl
+    400036: Reifen.3Mtl
+    400038: Reifen.4Mtl
+    400040: ReifenMtl
+    2300000: Alfa-alu
+    2300002: Alfa-logo
+    2300004: Alfa-wheel-inside
+    2300006: Alfa_147.0Mtl
+    2300008: Alfa_147.1Mtl
+    2300010: Alfa_147.2Mtl
+    2300012: Alfa_147.3Mtl
+    2300014: Alfa_147.4Mtl
+    2300016: Alfa_147.6Mtl
+    2300018: Alfa_147.7Mtl
+    2300020: Alfa_147.9Mtl
+    2300022: Felge.2Mtl
+    2300024: Felge.3Mtl
+    2300026: Felge.4Mtl
+    2300028: FelgeMtl
+    2300030: FIAT_INTERIOR
+    2300032: Reifen.2Mtl
+    2300034: Reifen.3Mtl
+    2300036: Reifen.4Mtl
+    2300038: ReifenMtl
+    3300000: Alfa-alu
+    3300002: Alfa-logo
+    3300004: Alfa-wheel-inside
+    3300006: Alfa_147.0Mtl
+    3300008: Alfa_147.1Mtl
+    3300010: Alfa_147.2Mtl
+    3300012: Alfa_147.3Mtl
+    3300014: Alfa_147.4Mtl
+    3300016: Alfa_147.6Mtl
+    3300018: Alfa_147.7Mtl
+    3300020: Alfa_147.9Mtl
+    3300022: Felge.2Mtl
+    3300024: Felge.3Mtl
+    3300026: Felge.4Mtl
+    3300028: FelgeMtl
+    3300030: FIAT_INTERIOR
+    3300032: Reifen.2Mtl
+    3300034: Reifen.3Mtl
+    3300036: Reifen.4Mtl
+    3300038: ReifenMtl
+    4300000: Alfa-alu
+    4300002: Alfa-logo
+    4300004: Alfa-wheel-inside
+    4300006: Alfa_147.0Mtl
+    4300008: Alfa_147.1Mtl
+    4300010: Alfa_147.2Mtl
+    4300012: Alfa_147.3Mtl
+    4300014: Alfa_147.4Mtl
+    4300016: Alfa_147.6Mtl
+    4300018: Alfa_147.7Mtl
+    4300020: Alfa_147.9Mtl
+    4300022: Felge.2Mtl
+    4300024: Felge.3Mtl
+    4300026: Felge.4Mtl
+    4300028: FelgeMtl
+    4300030: FIAT_INTERIOR
+    4300032: Reifen.2Mtl
+    4300034: Reifen.3Mtl
+    4300036: Reifen.4Mtl
+    4300038: ReifenMtl
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

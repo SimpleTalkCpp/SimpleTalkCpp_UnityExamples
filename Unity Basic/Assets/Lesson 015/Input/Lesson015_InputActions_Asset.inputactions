@@ -1,0 +1,101 @@
+{
+    "name": "Lesson015_InputActions_Asset",
+    "maps": [
+        {
+            "name": "MyGameMode",
+            "id": "8d867c1f-77f9-4c07-8686-b120a033c5c7",
+            "actions": [
+                {
+                    "name": "Action_MoveDown",
+                    "type": "Value",
+                    "id": "b2b0fa38-ec3a-489d-a122-bc68806947fc",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Action_Attack",
+                    "type": "Button",
+                    "id": "6c4267ee-5b2f-49b2-91df-74ebeef09dd8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "10af5c3e-58b6-487c-a50e-ee3e9ca51e84",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action_MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d655e90e-f57f-4711-966b-a5537732153d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action_MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5aeded1d-4866-4230-8f48-5a4c269bcd42",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action_MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f8cc895-35b3-4b16-b797-e170dd4a115b",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action_Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "SwimmingMode",
+            "id": "dba03386-a5be-4b38-90a7-70c0f23a492b",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "7b79ec14-74cf-4406-a1b4-2da4a1759d76",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "221595cf-9298-4ed8-9f0a-78d3c5a741cd",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

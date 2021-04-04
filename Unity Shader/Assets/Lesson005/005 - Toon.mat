@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 005 - Toon
+  m_Shader: {fileID: 4800000, guid: 47183142751b66d4c91fdfa7a302c3ab, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs: []
+    m_Floats:
+    - first:
+        name: toonAngle0
+      second: -0.6
+    - first:
+        name: toonAngle1
+      second: 0.5
+    - first:
+        name: toonAngle2
+      second: 0.9
+    - first:
+        name: toonOutlineWidth
+      second: 0.04
+    m_Colors:
+    - first:
+        name: myLocator
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: toonColor0
+      second: {r: 0.29995677, g: 0.588, b: 0.53676474, a: 0}
+    - first:
+        name: toonColor1
+      second: {r: 0.611, g: 0.6764706, b: 0.517301, a: 0}
+    - first:
+        name: toonColor2
+      second: {r: 0.7647059, g: 0.7546236, b: 0.6185121, a: 0}
+    - first:
+        name: toonColor3
+      second: {r: 0.37002593, g: 0.43382353, b: 0.37002593, a: 0.2}
+    - first:
+        name: toonOutlineColor
+      second: {r: 0, g: 0, b: 0, a: 0}
