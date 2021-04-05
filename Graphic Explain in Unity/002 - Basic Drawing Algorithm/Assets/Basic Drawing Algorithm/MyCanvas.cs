@@ -12,7 +12,7 @@ public class MyShape : MonoBehaviour {
 
 public class MyCanvas : MonoBehaviour
 {
-    public Vector2Int canvasSize = new Vector2Int(640, 480);
+	public Vector2Int canvasSize = new Vector2Int(640, 480);
 	public Color backgroundColor = Color.white;
 
 	public int drawOffsetX;
@@ -21,7 +21,7 @@ public class MyCanvas : MonoBehaviour
 	[Range(1, 8)]
 	public int drawScale = 1;
 
-    Texture2D _tex;
+	Texture2D _tex;
 
 	static MyCanvas _instance;
 
