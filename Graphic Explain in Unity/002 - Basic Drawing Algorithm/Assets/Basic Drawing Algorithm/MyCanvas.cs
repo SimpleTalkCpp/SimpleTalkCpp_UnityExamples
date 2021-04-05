@@ -50,7 +50,7 @@ public class MyCanvas : MonoBehaviour
 		}
 	}
 
-	public void SetPixel(int x, int y, Color color) {
+	public void SetPixel(int x, int y, in Color color) {
 		if (!outImage) return;
 		if (x < 0 || x >= canvasSize.x) return;
 		if (y < 0 || y >= canvasSize.y) return;
@@ -59,7 +59,7 @@ public class MyCanvas : MonoBehaviour
 		outImage.SetPixel(x, iy, color);
 	}
 
-	public void BlendPixel(int x, int y, Color color) {
+	public void BlendPixel(int x, int y, in Color color) {
 		if (!outImage) return;
 		if (x < 0 || x >= canvasSize.x) return;
 		if (y < 0 || y >= canvasSize.y) return;
@@ -71,6 +71,18 @@ public class MyCanvas : MonoBehaviour
 		newColor.a = 1;
 
 		outImage.SetPixel(x, iy, newColor);
+	}
+
+	public void DrawPoint(in Vector2Int pos, int size, in Color color) {
+		int n = size / 2;
+		for (int y = 0; y < n; y++) {
+			for (int x = 0; x < n; x++) {
+				BlendPixel(pos.x - x, pos.y - y, color);
+				BlendPixel(pos.x + x, pos.y - y, color);
+				BlendPixel(pos.x - x, pos.y + y, color);
+				BlendPixel(pos.x + x, pos.y + y, color);
+			}
+		}
 	}
 
 	public Texture2D CreateOutImage() {

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Ex001_DrawRect : MyShape
 {
-    public Vector2Int offset = new Vector2Int(150, 120);
-    public Vector2Int size   = new Vector2Int(300, 200);
+    public Vector2Int offset = new Vector2Int(130, 20);
+    public Vector2Int size   = new Vector2Int(120, 100);
 
     public bool fill = true;
-    public Color fillColor = new Color(0.5f, 1, 0.5f, 1);
+    public Color fillColor = new Color(.5f, 1, .5f, 1);
 
     public bool outline = true;
     public Color outlineColor = new Color(0,0,0,1);

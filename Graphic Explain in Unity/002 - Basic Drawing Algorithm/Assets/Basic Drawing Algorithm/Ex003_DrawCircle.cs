@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ex003_DrawCircle : MyShape
 {
-	public Vector2Int center = new Vector2Int(100, 100);
+	public Vector2Int center = new Vector2Int(60, 60);
 	public int radius = 50;
 
 	[Range(1, 50)]

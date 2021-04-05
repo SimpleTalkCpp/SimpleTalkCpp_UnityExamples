@@ -164,10 +164,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf50cb5016e7942acf16688ffb939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {x: 100, y: 60}
+  center: {x: 60, y: 60}
   radius: 50
-  color: {r: 0.5, g: 0.5, b: 1, a: 1}
+  antiAliasOutlineWidth: 1
+  color: {r: 1, g: 0.5, b: 1, a: 1}
   type: 1
+--- !u!1 &213917786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 213917787}
+  - component: {fileID: 213917788}
+  m_Layer: 0
+  m_Name: Ex004_DrawTriangle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &213917787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213917786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1070766488}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &213917788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213917786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d480a52b51a97424a94f677cc16c8556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointA: {x: 320, y: 10}
+  pointB: {x: 270, y: 150}
+  pointC: {x: 400, y: 100}
+  color: {r: 0.6, g: 0.6, b: 1, a: 1}
+  pointSize: 4
 --- !u!1 &401883410
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &889026862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,10 +361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21155c090a6c574eb514e610b6586fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 150, y: 120}
-  size: {x: 300, y: 200}
+  offset: {x: 130, y: 20}
+  size: {x: 120, y: 100}
   fill: 1
-  fillColor: {r: 0.5, g: 1, b: 0.5, a: 1}
+  fillColor: {r: 0.8, g: 1, b: 1, a: 1}
   outline: 1
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &889026863
@@ -364,7 +413,7 @@ MonoBehaviour:
   canvasSize: {x: 640, y: 480}
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   drawOffset: {x: 0, y: 0}
-  drawScale: 8
+  drawScale: 2
 --- !u!4 &1070766488
 Transform:
   m_ObjectHideFlags: 0
@@ -379,6 +428,7 @@ Transform:
   - {fileID: 889026863}
   - {fileID: 1488344866}
   - {fileID: 8501965}
+  - {fileID: 213917787}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -398,7 +448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1488344866
 Transform:
   m_ObjectHideFlags: 0
