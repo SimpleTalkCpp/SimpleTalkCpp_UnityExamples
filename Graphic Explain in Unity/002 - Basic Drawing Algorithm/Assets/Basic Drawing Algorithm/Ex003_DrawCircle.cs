@@ -68,6 +68,23 @@ public class Ex003_DrawCircle : MyShape
 	}
 
 	void DrawCircleOutline(MyCanvas canvas) {
+		int r2 = radius * radius;
+		for (int y = 0; y <= radius; y++) {
+			float dx = Mathf.Sqrt(r2 - (y * y));
+
+			if (y >　dx) break;
+			int x = (int)dx;
+
+			canvas.SetPixel(center.x + x, center.y + y, color);
+			canvas.SetPixel(center.x - x, center.y + y, color);
+			canvas.SetPixel(center.x + x, center.y - y, color);
+			canvas.SetPixel(center.x - x, center.y - y, color);
+
+			canvas.SetPixel(center.x + y, center.y + x, color);
+			canvas.SetPixel(center.x - y, center.y + x, color);
+			canvas.SetPixel(center.x + y, center.y - x, color);
+			canvas.SetPixel(center.x - y, center.y - x, color);
+		}
 	}
 
 	void DrawCircleAAOutline(MyCanvas canvas) {
