@@ -16,6 +16,8 @@ public class MyCanvas : MonoBehaviour
 	public Color backgroundColor = Color.white;
 
 	public Vector2Int drawOffset;
+
+	[Range(1, 5)]
 	public int drawScale = 1;
 
     Texture2D outImage;
