@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ex002_DrawLine : MyCanvasDrawBase
+public class Ex002_DrawLine : MyShape
 {
 	public int x0 = 20;
 	public int y0 = 50;
@@ -12,20 +12,20 @@ public class Ex002_DrawLine : MyCanvasDrawBase
 
 	public Color color = new Color(1,0,0,1);
 
-	public enum DrawAlgorithm {
+	public enum Type {
 		Naive,
 		Simple,
 		Bresenham,
 	}
 
-	public DrawAlgorithm drawAlgorithm = DrawAlgorithm.Bresenham;
+	public Type drawAlgorithm = Type.Bresenham;
 
 	public override void OnDraw(MyCanvas canvas)
 	{
 		switch (drawAlgorithm) {
-			case DrawAlgorithm.Naive:		DrawNaiveLine(canvas); break;
-			case DrawAlgorithm.Simple:		DrawSimpleLine(canvas); break;
-			case DrawAlgorithm.Bresenham:	DarwBresenhamLine(canvas); break;
+			case Type.Naive:		DrawNaiveLine(canvas); break;
+			case Type.Simple:		DrawSimpleLine(canvas); break;
+			case Type.Bresenham:	DarwBresenhamLine(canvas); break;
 		}
 	}
 

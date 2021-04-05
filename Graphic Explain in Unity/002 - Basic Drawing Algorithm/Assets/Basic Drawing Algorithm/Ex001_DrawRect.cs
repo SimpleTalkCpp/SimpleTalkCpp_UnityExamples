@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ex001_DrawRect : MyCanvasDrawBase
+public class Ex001_DrawRect : MyShape
 {
     public Vector2Int offset = new Vector2Int(150, 120);
     public Vector2Int size   = new Vector2Int(300, 200);

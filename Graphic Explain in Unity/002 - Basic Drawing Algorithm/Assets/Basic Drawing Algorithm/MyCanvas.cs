@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class MyCanvasDrawBase : MonoBehaviour {
+public class MyShape : MonoBehaviour {
 	public virtual void OnDraw(MyCanvas canvas) {}
 }
 
@@ -17,7 +17,7 @@ public class MyCanvas : MonoBehaviour
 
 	public Vector2Int drawOffset;
 
-	[Range(1, 5)]
+	[Range(1, 8)]
 	public int drawScale = 1;
 
     Texture2D outImage;
@@ -33,8 +33,8 @@ public class MyCanvas : MonoBehaviour
 		CreateOutImage();
 
 		foreach (Transform c in transform) {
-			var p = c.GetComponent<MyCanvasDrawBase>();
-			if (p) p.OnDraw(this);
+			var p = c.GetComponent<MyShape>();
+			if (p && p.isActiveAndEnabled) p.OnDraw(this);
 		}
 
 		outImage.Apply();
@@ -54,7 +54,23 @@ public class MyCanvas : MonoBehaviour
 		if (!outImage) return;
 		if (x < 0 || x >= canvasSize.x) return;
 		if (y < 0 || y >= canvasSize.y) return;
-		outImage.SetPixel(x, outImage.height - y - 1, color);
+
+		int iy  = outImage.height - y - 1;
+		outImage.SetPixel(x, iy, color);
+	}
+
+	public void BlendPixel(int x, int y, Color color) {
+		if (!outImage) return;
+		if (x < 0 || x >= canvasSize.x) return;
+		if (y < 0 || y >= canvasSize.y) return;
+
+		int iy  = outImage.height - y - 1;
+		var old = outImage.GetPixel(x, iy);
+
+		var newColor  = (color * color.a) + (old * (1-color.a));
+		newColor.a = 1;
+
+		outImage.SetPixel(x, iy, newColor);
 	}
 
 	public Texture2D CreateOutImage() {
