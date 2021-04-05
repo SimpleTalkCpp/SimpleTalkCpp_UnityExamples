@@ -11,7 +11,7 @@ public class Ex004_DrawTriangle : MyShape
 	public Color color = new Color(.3f, .3f, 1);
 
 	[Range(0, 10)]
-	public int pointSize = 4;
+	public int pointSize = 6;
 
 	static void swap(ref Vector2Int a, ref Vector2Int b) {
 		var tmp = a;

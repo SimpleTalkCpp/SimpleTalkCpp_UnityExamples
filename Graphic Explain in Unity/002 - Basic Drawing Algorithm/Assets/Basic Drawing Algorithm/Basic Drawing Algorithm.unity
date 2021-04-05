@@ -216,7 +216,7 @@ MonoBehaviour:
   b: {x: 270, y: 150}
   c: {x: 400, y: 100}
   color: {r: 0.3, g: 0.3, b: 1, a: 1}
-  pointSize: 8
+  pointSize: 6
 --- !u!1 &401883410
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +412,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSize: {x: 640, y: 480}
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  drawOffset: {x: 0, y: 0}
+  drawOffsetX: 0
+  drawOffsetY: 0
   drawScale: 2
 --- !u!4 &1070766488
 Transform:
@@ -475,9 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b9ef12c541bdb48a21773b7b138c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x0: 20
-  y0: 50
-  x1: 400
-  y1: 300
+  a: {x: 120, y: 150}
+  b: {x: 180, y: 300}
   color: {r: 1, g: 0, b: 0, a: 1}
   drawAlgorithm: 2

@@ -21,7 +21,7 @@ public class MyCanvas : MonoBehaviour
 	[Range(1, 8)]
 	public int drawScale = 1;
 
-    Texture2D outImage;
+    Texture2D _tex;
 
 	static MyCanvas _instance;
 
@@ -31,47 +31,47 @@ public class MyCanvas : MonoBehaviour
 	}
 
 	private void Update() {
-		CreateOutImage();
+		CreateTexture();
 
 		foreach (Transform c in transform) {
 			var p = c.GetComponent<MyShape>();
 			if (p && p.isActiveAndEnabled) p.OnDraw(this);
 		}
 
-		outImage.Apply();
+		_tex.Apply();
 	}
 
 	private void OnGUI() {
-		if (outImage) {
+		if (_tex) {
 			var rect = new Rect(drawOffsetX    * drawScale,
 								drawOffsetY    * drawScale,
-								outImage.width  * drawScale,
-								outImage.height * drawScale);
-			GUI.DrawTexture(rect, outImage);
+								_tex.width  * drawScale,
+								_tex.height * drawScale);
+			GUI.DrawTexture(rect, _tex);
 		}
 	}
 
 	public void SetPixel(int x, int y, in Color color) {
-		if (!outImage) return;
+		if (!_tex) return;
 		if (x < 0 || x >= canvasSize.x) return;
 		if (y < 0 || y >= canvasSize.y) return;
 
-		int iy  = outImage.height - y - 1;
-		outImage.SetPixel(x, iy, color);
+		int iy  = _tex.height - y - 1;
+		_tex.SetPixel(x, iy, color);
 	}
 
 	public void BlendPixel(int x, int y, in Color color) {
-		if (!outImage) return;
+		if (!_tex) return;
 		if (x < 0 || x >= canvasSize.x) return;
 		if (y < 0 || y >= canvasSize.y) return;
 
-		int iy  = outImage.height - y - 1;
-		var old = outImage.GetPixel(x, iy);
+		int iy  = _tex.height - y - 1;
+		var old = _tex.GetPixel(x, iy);
 
 		var newColor  = (color * color.a) + (old * (1-color.a));
 		newColor.a = 1;
 
-		outImage.SetPixel(x, iy, newColor);
+		_tex.SetPixel(x, iy, newColor);
 	}
 
 	public void DrawPoint(in Vector2Int pos, int size, in Color color) {
@@ -86,24 +86,24 @@ public class MyCanvas : MonoBehaviour
 		}
 	}
 
-	public Texture2D CreateOutImage() {
-		if (!outImage || outImage.width != canvasSize.x || outImage.height != canvasSize.y) {
+	public Texture2D CreateTexture() {
+		if (!_tex || _tex.width != canvasSize.x || _tex.height != canvasSize.y) {
 
 			if (Application.isEditor) {
-				DestroyImmediate(outImage);
+				DestroyImmediate(_tex);
 			} else {
-				Destroy(outImage);
+				Destroy(_tex);
 			}
 
-			outImage = new Texture2D(canvasSize.x, canvasSize.y);
-			outImage.filterMode = FilterMode.Point;
+			_tex = new Texture2D(canvasSize.x, canvasSize.y);
+			_tex.filterMode = FilterMode.Point;
 		}
 
 		var pixels = new Color[canvasSize.x * canvasSize.y];
 		for (int i = 0; i < pixels.Length; i++) {
 			pixels[i] = backgroundColor;
 		}
-		outImage.SetPixels(pixels);
-		return outImage;
+		_tex.SetPixels(pixels);
+		return _tex;
 	}
 }
