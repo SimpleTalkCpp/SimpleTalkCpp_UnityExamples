@@ -6,68 +6,57 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+public class MyCanvasDrawBase : MonoBehaviour {
+	public virtual void OnDraw(MyCanvas canvas) {}
+}
 
-[ExecuteInEditMode]
 public class MyCanvas : MonoBehaviour
 {
-    public int width  = 860;
-    public int height = 540;
+    public Vector2Int canvasSize = new Vector2Int(640, 480);
 	public Color backgroundColor = Color.white;
+
+	public Vector2Int drawOffset;
+	public int drawScale = 1;
 
     Texture2D outImage;
 
-	public interface IDemoBase {
-		void OnRunDemo(MyCanvas canvas);
+	static MyCanvas _instance;
+
+	private void Awake() {
+		_instance = this;
+		Application.targetFrameRate = 30;
 	}
 
-	[System.Serializable]
-	public class DrawRectDemo : IDemoBase {
-		public int x = 10;
-		public int y = 10;
-		public int width = 300;
-		public int height = 200;
-		public Color color = new Color(0,1,0);
+	private void Update() {
+		CreateOutImage();
 
-		public void OnRunDemo(MyCanvas canvas) {
-//			Debug.Log("DrawRect");
-			for (int j = 0; j < height; j++) {
-				for (int i = 0; i < width; i++) {
-					canvas.SetPixel(x + i, y + j, color);
-				}
-			}
+		foreach (Transform c in transform) {
+			var p = c.GetComponent<MyCanvasDrawBase>();
+			if (p) p.OnDraw(this);
 		}
-	};
-	public DrawRectDemo drawRectDemo;
 
-	[System.Serializable]
-	public class DrawLineDemo : IDemoBase{
-		public Vector2 point0;
-		public Vector2 point1;
-		public Color color;
-		public void OnRunDemo(MyCanvas canvas) {
-//			Debug.Log("DrawLineDemo");
-		}
-	};
-	public DrawLineDemo drawLineDemo;
-
-	public void OnRunDemo(string name) {
-		if (name == "drawRectDemo") drawRectDemo.OnRunDemo(this);
-		if (name == "drawLineDemo") drawLineDemo.OnRunDemo(this);
-	}
-
-	public void SetPixel(int x, int y, Color color) {
-		if (!outImage) return;
-		outImage.SetPixel(x, outImage.height - y - 1, color);
+		outImage.Apply();
 	}
 
 	private void OnGUI() {
 		if (outImage) {
-			GUI.DrawTexture(new Rect(0,0,outImage.width, outImage.height), outImage);
+			var rect = new Rect(drawOffset.x    * drawScale,
+								drawOffset.y    * drawScale,
+								outImage.width  * drawScale,
+								outImage.height * drawScale);
+			GUI.DrawTexture(rect, outImage);
 		}
 	}
 
+	public void SetPixel(int x, int y, Color color) {
+		if (!outImage) return;
+		if (x < 0 || x >= canvasSize.x) return;
+		if (y < 0 || y >= canvasSize.y) return;
+		outImage.SetPixel(x, outImage.height - y - 1, color);
+	}
+
 	public Texture2D CreateOutImage() {
-		if (!outImage || outImage.width != width || outImage.height != height) {
+		if (!outImage || outImage.width != canvasSize.x || outImage.height != canvasSize.y) {
 
 			if (Application.isEditor) {
 				DestroyImmediate(outImage);
@@ -75,11 +64,11 @@ public class MyCanvas : MonoBehaviour
 				Destroy(outImage);
 			}
 
-			outImage = new Texture2D(width, height);
+			outImage = new Texture2D(canvasSize.x, canvasSize.y);
 			outImage.filterMode = FilterMode.Point;
 		}
 
-		var pixels = new Color[width * height];
+		var pixels = new Color[canvasSize.x * canvasSize.y];
 		for (int i = 0; i < pixels.Length; i++) {
 			pixels[i] = backgroundColor;
 		}
@@ -87,29 +76,3 @@ public class MyCanvas : MonoBehaviour
 		return outImage;
 	}
 }
-
-#if UNITY_EDITOR
-
-[CustomPropertyDrawer(typeof(MyCanvas.IDemoBase), true)]
-public class MyDemoButton : PropertyDrawer {
-	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-		EditorGUI.PropertyField(position, property, true);
-		position.y += EditorGUI.GetPropertyHeight(property, true) + 10;
-		position.height = 30;
-		if (GUI.Button(position, "Run")) {
-			var canvas = property.serializedObject.targetObject as MyCanvas;
-			var outImage = canvas.CreateOutImage();
-
-			if (canvas) {
-				canvas.OnRunDemo(property.name);
-			}
-			outImage.Apply();
-		}
-	}
-
-	public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-		return EditorGUI.GetPropertyHeight(property, true) + 50;
-	}
-}
-
-#endif
