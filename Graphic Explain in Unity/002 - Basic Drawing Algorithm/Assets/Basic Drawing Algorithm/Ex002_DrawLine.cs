@@ -13,6 +13,7 @@ public class Ex002_DrawLine : MyCanvasDrawBase
 	public Color color = new Color(1,0,0,1);
 
 	public enum DrawAlgorithm {
+		Naive,
 		Simple,
 		Bresenham,
 	}
@@ -22,12 +23,24 @@ public class Ex002_DrawLine : MyCanvasDrawBase
 	public override void OnDraw(MyCanvas canvas)
 	{
 		switch (drawAlgorithm) {
-			case DrawAlgorithm.Simple:		DrawLine(canvas); break;
+			case DrawAlgorithm.Naive:		DrawNaiveLine(canvas); break;
+			case DrawAlgorithm.Simple:		DrawSimpleLine(canvas); break;
 			case DrawAlgorithm.Bresenham:	DarwBresenhamLine(canvas); break;
 		}
 	}
 
-	void DrawLine(MyCanvas canvas) {
+	void DrawNaiveLine(MyCanvas canvas) {
+		int dx = System.Math.Abs(x1 - x0);
+		int dy = System.Math.Abs(y1 - y0);
+		if (dx == 0 || dy == 0) return;
+		float m = (float)dy / dx;
+		for (int x = 0; x < dx; x++) {
+			int y = (int)(m * x);
+			canvas.SetPixel(x + x0, y + y0, color);
+		}
+	}
+
+	void DrawSimpleLine(MyCanvas canvas) {
 		int dx = System.Math.Abs(x1 - x0);
 		int dy = System.Math.Abs(y1 - y0);
 

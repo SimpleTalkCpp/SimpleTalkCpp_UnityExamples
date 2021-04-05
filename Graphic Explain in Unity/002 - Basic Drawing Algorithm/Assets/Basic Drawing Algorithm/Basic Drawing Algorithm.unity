@@ -314,8 +314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6543f89e9443db4793fd394e1309fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasSize: {x: 800, y: 600}
+  canvasSize: {x: 640, y: 480}
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  drawOffset: {x: 0, y: 0}
+  drawScale: 3
 --- !u!4 &1070766488
 Transform:
   m_ObjectHideFlags: 0
@@ -375,8 +377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b9ef12c541bdb48a21773b7b138c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x0: 200
+  x0: 20
   y0: 50
   x1: 400
-  y1: 600
+  y1: 300
   color: {r: 1, g: 0, b: 0, a: 1}
+  drawAlgorithm: 2
