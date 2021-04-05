@@ -15,33 +15,33 @@ public class Ex001_DrawRect : MyShape
 
 	public override void OnDraw(MyCanvas canvas)
     {
-        if (fill)    DrawFill(canvas);
-        if (outline) DrawOutline(canvas);
+        if (fill)    FillRect   (canvas, offset.x, offset.y, size.x, size.y, fillColor);
+        if (outline) DrawOutline(canvas, offset.x, offset.y, size.x, size.y, outlineColor);
     }
 
-    void DrawFill(MyCanvas canvas) {
-        for (int y = 0; y < size.y; y++) {
-            for (int x = 0; x < size.x; x++) {
-                canvas.SetPixel(offset.x + x, offset.y + y, fillColor);
+    static void FillRect(MyCanvas canvas, int offsetX, int offsetY, int width, int height, in Color color) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                canvas.SetPixel(offsetX + x, offsetY + y, color);
             }
         }
     }
 
-    void DrawOutline(MyCanvas canvas) {
-        for (int x = 0; x < size.x; x++) {
+    static void DrawOutline(MyCanvas canvas, int offsetX, int offsetY, int width, int height, in Color color) {
+        for (int x = 0; x < width; x++) {
             //top
-            canvas.SetPixel(offset.x + x, offset.y, outlineColor);
+            canvas.SetPixel(offsetX + x, offsetY, color);
 
             // bottom
-            canvas.SetPixel(offset.x + x, offset.y + size.y - 1, outlineColor);
+            canvas.SetPixel(offsetX + x, offsetY + height - 1, color);
         }
 
-        for (int y = 0; y < size.y; y++) {
+        for (int y = 0; y < height; y++) {
             // Left
-            canvas.SetPixel(offset.x, offset.y + y, outlineColor);
+            canvas.SetPixel(offsetX, offsetY + y, color);
 
             // Right
-            canvas.SetPixel(offset.x + size.x, offset.y + y - 1, outlineColor);
+            canvas.SetPixel(offsetX + width, offsetY + y - 1, color);
         }
     }
 }

@@ -15,7 +15,8 @@ public class MyCanvas : MonoBehaviour
     public Vector2Int canvasSize = new Vector2Int(640, 480);
 	public Color backgroundColor = Color.white;
 
-	public Vector2Int drawOffset;
+	public int drawOffsetX;
+	public int drawOffsetY;
 
 	[Range(1, 8)]
 	public int drawScale = 1;
@@ -42,8 +43,8 @@ public class MyCanvas : MonoBehaviour
 
 	private void OnGUI() {
 		if (outImage) {
-			var rect = new Rect(drawOffset.x    * drawScale,
-								drawOffset.y    * drawScale,
+			var rect = new Rect(drawOffsetX    * drawScale,
+								drawOffsetY    * drawScale,
 								outImage.width  * drawScale,
 								outImage.height * drawScale);
 			GUI.DrawTexture(rect, outImage);

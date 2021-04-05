@@ -168,7 +168,7 @@ MonoBehaviour:
   radius: 50
   antiAliasOutlineWidth: 1
   color: {r: 1, g: 0.5, b: 1, a: 1}
-  type: 1
+  type: 4
 --- !u!1 &213917786
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,11 +212,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d480a52b51a97424a94f677cc16c8556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {x: 320, y: 10}
-  pointB: {x: 270, y: 150}
-  pointC: {x: 400, y: 100}
-  color: {r: 0.6, g: 0.6, b: 1, a: 1}
-  pointSize: 4
+  a: {x: 320, y: 10}
+  b: {x: 270, y: 150}
+  c: {x: 400, y: 100}
+  color: {r: 0.3, g: 0.3, b: 1, a: 1}
+  pointSize: 8
 --- !u!1 &401883410
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
   offset: {x: 130, y: 20}
   size: {x: 120, y: 100}
   fill: 1
-  fillColor: {r: 0.8, g: 1, b: 1, a: 1}
+  fillColor: {r: 0.5, g: 1, b: 0.5, a: 1}
   outline: 1
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &889026863

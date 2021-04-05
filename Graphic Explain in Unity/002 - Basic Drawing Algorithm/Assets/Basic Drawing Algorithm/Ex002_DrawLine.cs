@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Ex002_DrawLine : MyShape
 {
-	public int x0 = 20;
-	public int y0 = 50;
-
-	public int x1 = 400;
-	public int y1 = 300;
+	public Vector2Int a = new Vector2Int(120, 150);
+	public Vector2Int b = new Vector2Int(180, 300);
 
 	public Color color = new Color(1,0,0,1);
 
@@ -23,61 +20,86 @@ public class Ex002_DrawLine : MyShape
 	public override void OnDraw(MyCanvas canvas)
 	{
 		switch (drawAlgorithm) {
-			case Type.Naive:		DrawNaiveLine(canvas); break;
-			case Type.Simple:		DrawSimpleLine(canvas); break;
-			case Type.Bresenham:	DarwBresenhamLine(canvas); break;
+			case Type.Naive:		DrawNaiveLine	 (canvas, a, b, color); break;
+			case Type.Simple:		DrawSimpleLine	 (canvas, a, b, color); break;
+			case Type.Bresenham:	DarwBresenhamLine(canvas, a, b, color); break;
 		}
 	}
 
-	void DrawNaiveLine(MyCanvas canvas) {
-		int dx = System.Math.Abs(x1 - x0);
-		int dy = System.Math.Abs(y1 - y0);
+	static void swap(ref Vector2Int a, ref Vector2Int b) {
+		var tmp = a;
+		a = b;
+		b = tmp;
+	}
+
+	static void DrawNaiveLine(MyCanvas canvas, Vector2Int a, Vector2Int b, in Color color) {
+		if (b.x < a.x) {
+			swap(ref a, ref b);
+		}
+
+		int dx = b.x - a.x;
+		int dy = b.y - a.y;
+
 		if (dx == 0 || dy == 0) return;
+
 		float m = (float)dy / dx;
 		for (int x = 0; x < dx; x++) {
 			int y = (int)(m * x);
-			canvas.SetPixel(x + x0, y + y0, color);
+			canvas.SetPixel(x + a.x, y + a.y, color);
 		}
 	}
 
-	void DrawSimpleLine(MyCanvas canvas) {
-		int dx = System.Math.Abs(x1 - x0);
-		int dy = System.Math.Abs(y1 - y0);
+	static void DrawSimpleLine(MyCanvas canvas, Vector2Int a, Vector2Int b, in Color color) {
+		int dx = b.x - a.x;
+		int dy = b.y - a.y;
 
 		if (dx == 0 || dy == 0) return;
 
-		if (dx > dy) {
+		if (System.Math.Abs(dx) > System.Math.Abs(dy)) {
+			if (b.x < a.x) {
+				swap(ref a, ref b);
+				dx = b.x - a.x;
+				dy = b.y - a.y;
+			}
+
 			float m = (float)dy / dx;
 			for (int x = 0; x < dx; x++) {
 				int y = (int)(m * x);
-				canvas.SetPixel(x + x0, y + y0, color);
+				canvas.SetPixel(x + a.x, y + a.y, color);
 			}
+
 		} else {
+			if (b.y < a.y) {
+				swap(ref a, ref b);
+				dx = b.x - a.x;
+				dy = b.y - a.y;
+			}
+
 			float m = (float)dx / dy;
 			for (int y = 0; y < dy; y++) {
 				int x = (int)(m * y);
-				canvas.SetPixel(x + x0, y + y0, color);
+				canvas.SetPixel(x + a.x, y + a.y, color);
 			}
 		}
 	}
 
-	void DarwBresenhamLine(MyCanvas canvas) {
+	static void DarwBresenhamLine(MyCanvas canvas, Vector2Int a, Vector2Int b, in Color color) {
 		// Bresenham's line algorithm - https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 
-		int dx =  System.Math.Abs(x1 - x0);
-		int dy = -System.Math.Abs(y1 - y0);
+		int dx =  System.Math.Abs(b.x - a.x);
+		int dy = -System.Math.Abs(b.y - a.y);
 
-		int signX = x0 < x1 ? 1 : -1;
-		int signY = y0 < y1 ? 1 : -1;
+		int signX = a.x < b.x ? 1 : -1;
+		int signY = a.y < b.y ? 1 : -1;
 
 		int err = dx + dy;
 
-		int x = x0;
-		int y = y0;
+		int x = a.x;
+		int y = a.y;
 
 		while (true) {
 			canvas.SetPixel(x, y, color);
-			if (x == x1 && y == y1) break;
+			if (x == b.x && y == b.y) break;
 
 			int e2 = 2 * err;
 			if (e2 >= dy) {

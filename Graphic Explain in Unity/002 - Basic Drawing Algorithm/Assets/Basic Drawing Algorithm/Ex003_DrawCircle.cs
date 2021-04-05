@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ex003_DrawCircle : MyShape
 {
 	public Vector2Int center = new Vector2Int(60, 60);
-	public int radius = 50;
+	public int radius = 60;
 
 	[Range(1, 50)]
 	public float antiAliasOutlineWidth = 1;
@@ -21,7 +21,7 @@ public class Ex003_DrawCircle : MyShape
 	}
 	public Type type = Type.FillAntiAlias;
 
-	void DrawFillCircle(MyCanvas canvas) {
+	static void DrawFillCircle(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
 			float dx = Mathf.Sqrt(r2 - (y * y));
@@ -35,7 +35,7 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	void DrawFillAACircle(MyCanvas canvas) {
+	static void DrawFillAACircle(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
 			float dx = Mathf.Sqrt(r2 - (y * y));
@@ -55,7 +55,7 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	void DrawNaiveCircleOutline(MyCanvas canvas) {
+	static void DrawNaiveCircleOutline(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
 			float dx = Mathf.Sqrt(r2 - (y * y));
@@ -67,7 +67,7 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	void DrawCircleOutline(MyCanvas canvas) {
+	static void DrawCircleOutline(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
 			float dx = Mathf.Sqrt(r2 - (y * y));
@@ -87,14 +87,14 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	void DrawCircleAAOutline(MyCanvas canvas) {
+	static void DrawCircleAAOutline(MyCanvas canvas, in Vector2Int center, int radius, float antiAliasOutlineWidth, in Color color) {
 		int n = radius + Mathf.CeilToInt(antiAliasOutlineWidth);
 
 		for (int y = 0; y <= n; y++) {
 			for (int x = 0; x <= n; x++) {
 				float r = Mathf.Sqrt((x * x) + (y * y));
 
-				float d = Mathf.Abs(r - radius) - antiAliasOutlineWidth;
+				float d = Mathf.Abs(r - radius) - antiAliasOutlineWidth + 1;
 				float alpha = 1 - Mathf.Clamp01(d);
 				if (alpha <= 0) continue;
 
@@ -111,11 +111,11 @@ public class Ex003_DrawCircle : MyShape
 
 	public override void OnDraw(MyCanvas canvas) {
 		switch (type) {
-			case Type.Fill:				DrawFillCircle(canvas);				break;
-			case Type.FillAntiAlias:	DrawFillAACircle(canvas);			break;
-			case Type.NaiveOutline:		DrawNaiveCircleOutline(canvas);		break;
-			case Type.Outline:			DrawCircleOutline(canvas);			break;
-			case Type.AntiAliasOutline:	DrawCircleAAOutline(canvas);			break;
+			case Type.Fill:				DrawFillCircle			(canvas, center, radius, color); break;
+			case Type.FillAntiAlias:	DrawFillAACircle		(canvas, center, radius, color); break;
+			case Type.NaiveOutline:		DrawNaiveCircleOutline	(canvas, center, radius, color); break;
+			case Type.Outline:			DrawCircleOutline		(canvas, center, radius, color); break;
+			case Type.AntiAliasOutline:	DrawCircleAAOutline		(canvas, center, radius, antiAliasOutlineWidth, color); break;
 		}
 	}
 }

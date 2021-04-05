@@ -4,30 +4,26 @@ using UnityEngine;
 
 public class Ex004_DrawTriangle : MyShape
 {
-	public Vector2Int pointA = new Vector2Int(320, 10);
-	public Vector2Int pointB = new Vector2Int(270, 150);
-	public Vector2Int pointC = new Vector2Int(400, 100);
+	public Vector2Int a = new Vector2Int(320, 10);
+	public Vector2Int b = new Vector2Int(270, 150);
+	public Vector2Int c = new Vector2Int(400, 100);
 
 	public Color color = new Color(.3f, .3f, 1);
 
 	[Range(0, 10)]
-	public int pointSize = 8;
+	public int pointSize = 4;
 
-	void swap(ref Vector2Int a, ref Vector2Int b) {
+	static void swap(ref Vector2Int a, ref Vector2Int b) {
 		var tmp = a;
 		a = b;
 		b = tmp;
 	}
 
 	public override void OnDraw(MyCanvas canvas) {
-		DrawTriangle(canvas);
+		DrawTriangle(canvas, a, b, c, color, pointSize);
 	}
 
-	void DrawTriangle(MyCanvas canvas) {
-		var a = pointA;
-		var b = pointB;
-		var c = pointC;
-
+	static void DrawTriangle(MyCanvas canvas, Vector2Int a, Vector2Int b, Vector2Int c, in Color color, int pointSize) {
 		if (b.y < a.y) swap(ref a, ref b);
 		if (c.y < a.y) swap(ref a, ref c);
 		if (c.y < b.y) swap(ref b, ref c);
@@ -36,18 +32,18 @@ public class Ex004_DrawTriangle : MyShape
 		int dy = c.y - b.y;
 
 		if (b.y == c.y) {
-			_DrawFlatTrangle(canvas, a, b, c);
+			_DrawFlatTrangle(canvas, a, b, c, color);
 
 		} else if (a.y == b.y) {
-			_DrawFlatTrangle(canvas, c, a, b);
+			_DrawFlatTrangle(canvas, c, a, b, color);
 
 		} else {
 			var mid = new Vector2Int();
 			mid.x = lineIntersectY(a, c, b.y);
 			mid.y = b.y;
 
-			_DrawFlatTrangle(canvas, a, b, mid);
-			_DrawFlatTrangle(canvas, c, b, mid);
+			_DrawFlatTrangle(canvas, a, b, mid, color);
+			_DrawFlatTrangle(canvas, c, b, mid, color);
 
 			canvas.DrawPoint(mid, pointSize, new Color(1,0,1));
 		}
@@ -59,7 +55,7 @@ public class Ex004_DrawTriangle : MyShape
 		}
 	}
 
-	int lineIntersectY(in Vector2Int a, in Vector2Int b, int y) {
+	static int lineIntersectY(in Vector2Int a, in Vector2Int b, int y) {
 		int dx = b.x - a.x;
 		int dy = b.y - a.y;
 
@@ -67,7 +63,7 @@ public class Ex004_DrawTriangle : MyShape
 		return (int)((y - a.y) * ((float)dx/dy) + a.x);
 	}
 
-	void _DrawFlatTrangle(MyCanvas canvas, Vector2Int a, Vector2Int b, Vector2Int c) {
+	static void _DrawFlatTrangle(MyCanvas canvas, in Vector2Int a, in Vector2Int b, in Vector2Int c, in Color color) {
 		if (b.y != c.y) {
 			Debug.LogError("");
 		}
