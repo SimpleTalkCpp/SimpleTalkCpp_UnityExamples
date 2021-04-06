@@ -23,10 +23,7 @@ public class MyCanvas : MonoBehaviour
 
 	Texture2D _tex;
 
-	static MyCanvas _instance;
-
 	private void Awake() {
-		_instance = this;
 		Application.targetFrameRate = 30;
 	}
 
@@ -41,10 +38,33 @@ public class MyCanvas : MonoBehaviour
 		_tex.Apply();
 	}
 
+	public Texture2D CreateTexture() {
+		if (!_tex || _tex.width != canvasSize.x || _tex.height != canvasSize.y) {
+
+			if (_tex) {
+				if (Application.isEditor) {
+					DestroyImmediate(_tex);
+				} else {
+					Destroy(_tex);
+				}
+			}
+
+			_tex = new Texture2D(canvasSize.x, canvasSize.y);
+			_tex.filterMode = FilterMode.Point;
+		}
+
+		var pixels = new Color[canvasSize.x * canvasSize.y];
+		for (int i = 0; i < pixels.Length; i++) {
+			pixels[i] = backgroundColor;
+		}
+		_tex.SetPixels(pixels);
+		return _tex;
+	}
+
 	private void OnGUI() {
 		if (_tex) {
-			var rect = new Rect(drawOffsetX    * drawScale,
-								drawOffsetY    * drawScale,
+			var rect = new Rect(drawOffsetX * drawScale,
+								drawOffsetY * drawScale,
 								_tex.width  * drawScale,
 								_tex.height * drawScale);
 			GUI.DrawTexture(rect, _tex);
@@ -86,24 +106,4 @@ public class MyCanvas : MonoBehaviour
 		}
 	}
 
-	public Texture2D CreateTexture() {
-		if (!_tex || _tex.width != canvasSize.x || _tex.height != canvasSize.y) {
-
-			if (Application.isEditor) {
-				DestroyImmediate(_tex);
-			} else {
-				Destroy(_tex);
-			}
-
-			_tex = new Texture2D(canvasSize.x, canvasSize.y);
-			_tex.filterMode = FilterMode.Point;
-		}
-
-		var pixels = new Color[canvasSize.x * canvasSize.y];
-		for (int i = 0; i < pixels.Length; i++) {
-			pixels[i] = backgroundColor;
-		}
-		_tex.SetPixels(pixels);
-		return _tex;
-	}
 }

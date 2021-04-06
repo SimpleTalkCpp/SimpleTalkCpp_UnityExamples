@@ -42,9 +42,9 @@ public class Ex002_DrawLine : MyShape
 
 		if (dx == 0 || dy == 0) return;
 
-		float m = (float)dy / dx;
+		float slope = (float)dy / dx;
 		for (int x = 0; x < dx; x++) {
-			int y = (int)(m * x);
+			int y = (int)(slope * x);
 			canvas.SetPixel(x + a.x, y + a.y, color);
 		}
 	}
@@ -62,9 +62,9 @@ public class Ex002_DrawLine : MyShape
 				dy = b.y - a.y;
 			}
 
-			float m = (float)dy / dx;
+			float slope = (float)dy / dx;
 			for (int x = 0; x < dx; x++) {
-				int y = (int)(m * x);
+				int y = (int)(slope * x);
 				canvas.SetPixel(x + a.x, y + a.y, color);
 			}
 
@@ -75,9 +75,9 @@ public class Ex002_DrawLine : MyShape
 				dy = b.y - a.y;
 			}
 
-			float m = (float)dx / dy;
+			float slope = (float)dx / dy;
 			for (int y = 0; y < dy; y++) {
-				int x = (int)(m * y);
+				int x = (int)(slope * y);
 				canvas.SetPixel(x + a.x, y + a.y, color);
 			}
 		}

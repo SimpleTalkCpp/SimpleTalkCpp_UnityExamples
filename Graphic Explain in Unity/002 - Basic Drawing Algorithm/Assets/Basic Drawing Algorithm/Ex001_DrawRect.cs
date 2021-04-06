@@ -28,20 +28,14 @@ public class Ex001_DrawRect : MyShape
 	}
 
 	static void DrawOutline(MyCanvas canvas, int offsetX, int offsetY, int width, int height, in Color color) {
-		for (int x = 0; x < width; x++) {
-			//top
-			canvas.SetPixel(offsetX + x, offsetY, color);
-
-			// bottom
-			canvas.SetPixel(offsetX + x, offsetY + height - 1, color);
+		for (int x = 0; x < width; x++) {			
+			canvas.SetPixel(offsetX + x, offsetY,              color); // top
+			canvas.SetPixel(offsetX + x, offsetY + height - 1, color); // bottom
 		}
 
-		for (int y = 0; y < height; y++) {
-			// Left
-			canvas.SetPixel(offsetX, offsetY + y, color);
-
-			// Right
-			canvas.SetPixel(offsetX + width, offsetY + y - 1, color);
+		for (int y = 0; y < height; y++) {			
+			canvas.SetPixel(offsetX,             offsetY + y, color); // Left
+			canvas.SetPixel(offsetX + width - 1, offsetY + y, color); // Right
 		}
 	}
 }
