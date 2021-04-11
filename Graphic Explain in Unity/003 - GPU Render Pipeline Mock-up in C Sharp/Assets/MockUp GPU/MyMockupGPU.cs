@@ -133,7 +133,7 @@ public class MyMockupGPU : MyShape
 			vsInput.color   = vertexIndex < colors.Count  ? colors[vertexIndex]  : Color.white;
 
 			// semantic: NORMAL
-			//vsInput.normal = uniforms.unity_ObjectToWorld.MultiplyVector(vsInput.normal);
+			vsInput.normal = uniforms.unity_ObjectToWorld.MultiplyVector(vsInput.normal);
 
 			var o = vertexShader(vsInput, uniforms, material);
 			o.pos = (o.pos.w != 0) ? o.pos / o.pos.w : Vector4.zero;
@@ -158,6 +158,7 @@ public class MyMockupGPU : MyShape
 					DrawBresenhamLine(canvas, v0._screenPos, v1._screenPos, Color.red);
 					DrawBresenhamLine(canvas, v1._screenPos, v2._screenPos, Color.red);
 					DrawBresenhamLine(canvas, v2._screenPos, v0._screenPos, Color.red);
+
 				} else {
 					var v01 = v0.pos - v1.pos;
 					var v02 = v0.pos - v2.pos;
@@ -290,8 +291,13 @@ public class MyMockupGPU : MyShape
 				end = tmp;
 			}
 
+			var barycentric = new Vector2(0, (float)i/dy);
+
 			for (int x = start; x <= end; x++) {
-				var psInput = v0;
+				barycentric.x = (float)(x - start) / (end - start);
+
+				var psInput = (v1._screenPos.x < v2._screenPos.x) ? VSOutput.Lerp(v1, v2, barycentric.x) : VSOutput.Lerp(v2, v1, barycentric.x);
+				psInput = VSOutput.Lerp(v0, psInput, barycentric.y);
 
 				var col = pixelShader(psInput, uniforms, material);
 				canvas.BlendPixel(x, y, col);
@@ -312,9 +318,12 @@ public class MyMockupGPU : MyShape
 	}
 
 	Color pixelShader(VSOutput input, in ShaderParameters uniforms, Material material) {
-		var light = Vector3.Dot(input.normal, uniforms._WorldSpaceCameraPos);
+		var light = Mathf.Clamp01(Vector3.Dot(input.normal, uniforms._WorldSpaceCameraPos));
 		var o = input.color * light;
 		o.a = 1;
-		return o;
+
+		var col = uniforms._WorldSpaceCameraPos;
+
+		return new Color(col.x, col.y, col.z, 1);
 	}
 }
