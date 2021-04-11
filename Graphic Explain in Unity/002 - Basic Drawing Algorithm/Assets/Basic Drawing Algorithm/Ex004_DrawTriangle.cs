@@ -39,7 +39,7 @@ public class Ex004_DrawTriangle : MyShape
 
 		} else {
 			var mid = new Vector2Int();
-			mid.x = lineIntersectY(a, c, b.y);
+			mid.x = lineIntersect(a, c, b.y);
 			mid.y = b.y;
 
 			_DrawFlatTrangle(canvas, a, b, mid, color);
@@ -55,8 +55,8 @@ public class Ex004_DrawTriangle : MyShape
 		}
 	}
 
-	static int lineIntersectY(in Vector2Int a, in Vector2Int b, int y) {
-		int dx = b.x - a.x;
+	static int lineIntersect(in Vector2Int a, in Vector2Int b, int y) {
+ 		int dx = b.x - a.x;
 		int dy = b.y - a.y;
 
 		if (dy == 0) return a.x;
@@ -78,8 +78,8 @@ public class Ex004_DrawTriangle : MyShape
 		for (int i = 0; i <= dy; i++) {
 			int y = a.y + i * step;
 
-			var start = lineIntersectY(a, b, y);
-			var end   = lineIntersectY(a, c, y);
+			var start = lineIntersect(a, b, y);
+			var end   = lineIntersect(a, c, y);
 
 			if (start > end) {
 				var tmp = start;

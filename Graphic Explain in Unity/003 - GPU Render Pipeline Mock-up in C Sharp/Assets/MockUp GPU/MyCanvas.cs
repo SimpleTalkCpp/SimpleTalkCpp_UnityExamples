@@ -15,12 +15,17 @@ public class MyCanvas : MonoBehaviour
 	public Vector2Int canvasSize = new Vector2Int(640, 480);
 	public Color backgroundColor = Color.white;
 
+	public float clearDepthValue = 1;
+
 	public int drawOffsetX;
 	public int drawOffsetY;
 
 	[Range(1, 8)]
 	public int drawScale = 1;
 
+	public float fps = 0;
+
+	float[] _depthBuffer;
 	Texture2D _tex;
 
 	private void Awake() {
@@ -28,6 +33,8 @@ public class MyCanvas : MonoBehaviour
 	}
 
 	private void Update() {
+		fps = 1 / Time.deltaTime;
+
 		canvasSize.x = Screen.width;
 		canvasSize.y = Screen.height;
 
@@ -35,9 +42,9 @@ public class MyCanvas : MonoBehaviour
 
 		CreateTexture();
 
-		foreach (Transform c in transform) {
-			var p = c.GetComponent<MyShape>();
-			if (p && p.isActiveAndEnabled) p.OnDraw(this);
+		var shapes = transform.GetComponentsInChildren<MyShape>(false);
+		foreach (var shape in shapes) {
+			shape.OnDraw(this);
 		}
 
 		_tex.Apply();
@@ -56,6 +63,7 @@ public class MyCanvas : MonoBehaviour
 
 			_tex = new Texture2D(canvasSize.x, canvasSize.y);
 			_tex.filterMode = FilterMode.Point;
+			_depthBuffer = new float[canvasSize.x * canvasSize.y];
 		}
 
 		var pixels = new Color[canvasSize.x * canvasSize.y];
@@ -63,6 +71,11 @@ public class MyCanvas : MonoBehaviour
 			pixels[i] = backgroundColor;
 		}
 		_tex.SetPixels(pixels);
+
+		for (int i = 0; i < _depthBuffer.Length; i++) {
+			_depthBuffer[i] = clearDepthValue;
+		}
+
 		return _tex;
 	}
 
@@ -74,6 +87,8 @@ public class MyCanvas : MonoBehaviour
 								_tex.height * drawScale);
 			GUI.DrawTexture(rect, _tex);
 		}
+
+		GUILayout.Box($"Frame = {Time.frameCount}\n FPS = {(int)fps}");
 	}
 
 	public void SetPixel(int x, int y, in Color color) {
@@ -111,4 +126,11 @@ public class MyCanvas : MonoBehaviour
 		}
 	}
 
+	public float GetDepth(int x, int y) {
+		return _depthBuffer[y * canvasSize.x + x];
+	}
+
+	public void SetDepth(int x, int y, float depth) {
+		_depthBuffer[y * canvasSize.x + x] = depth;
+	}
 }

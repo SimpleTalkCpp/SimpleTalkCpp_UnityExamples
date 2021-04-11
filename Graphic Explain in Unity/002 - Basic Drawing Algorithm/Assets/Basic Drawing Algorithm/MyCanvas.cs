@@ -21,6 +21,8 @@ public class MyCanvas : MonoBehaviour
 	[Range(1, 8)]
 	public int drawScale = 1;
 
+	public float fps = 0;
+
 	Texture2D _tex;
 
 	private void Awake() {
@@ -28,14 +30,28 @@ public class MyCanvas : MonoBehaviour
 	}
 
 	private void Update() {
+		fps = 1 / Time.deltaTime;
+
 		CreateTexture();
 
-		foreach (Transform c in transform) {
-			var p = c.GetComponent<MyShape>();
-			if (p && p.isActiveAndEnabled) p.OnDraw(this);
+		var shapes = transform.GetComponentsInChildren<MyShape>(false);
+		foreach (var shape in shapes) {
+			shape.OnDraw(this);
 		}
 
 		_tex.Apply();
+	}
+
+	private void OnGUI() {
+		if (_tex) {
+			var rect = new Rect(drawOffsetX * drawScale,
+								drawOffsetY * drawScale,
+								_tex.width  * drawScale,
+								_tex.height * drawScale);
+			GUI.DrawTexture(rect, _tex);
+		}
+
+		GUILayout.Box($"Frame = {Time.frameCount}\n FPS = {(int)fps}");
 	}
 
 	public Texture2D CreateTexture() {
@@ -58,17 +74,8 @@ public class MyCanvas : MonoBehaviour
 			pixels[i] = backgroundColor;
 		}
 		_tex.SetPixels(pixels);
-		return _tex;
-	}
 
-	private void OnGUI() {
-		if (_tex) {
-			var rect = new Rect(drawOffsetX * drawScale,
-								drawOffsetY * drawScale,
-								_tex.width  * drawScale,
-								_tex.height * drawScale);
-			GUI.DrawTexture(rect, _tex);
-		}
+		return _tex;
 	}
 
 	public void SetPixel(int x, int y, in Color color) {
