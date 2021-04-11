@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   center: {x: 60, y: 60}
   radius: 50
-  antiAliasOutlineWidth: 1
+  antiAliasOutlineWidth: 2.1
   color: {r: 1, g: 0.5, b: 1, a: 1}
   type: 4
 --- !u!1 &213917786
