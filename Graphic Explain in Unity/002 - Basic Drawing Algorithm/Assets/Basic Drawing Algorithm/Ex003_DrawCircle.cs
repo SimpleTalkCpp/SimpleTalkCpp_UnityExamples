@@ -12,21 +12,26 @@ public class Ex003_DrawCircle : MyShape
 
 	public Color color = new Color(1, 0.5f, 1, 1);
 
+	[Range(0, 100)]
+	public int debugStepLimit = 100;
+
 	public enum Type {
-		Fill,
-		FillAntiAlias,
 		NaiveOutline,
 		Outline,
+		Fill,
+		FillAntiAlias,
 		AntiAliasOutline,
 	}
 	public Type type = Type.FillAntiAlias;
 
-	static void DrawFillCircle(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
+	void DrawFillCircle(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
+			if (y >= debugStepLimit) return;
+
 			float dx = Mathf.Sqrt(r2 - (y * y));
 
-			for (int x = 0; x <= dx; x++) {
+			for (int x = 0; x <= dx; x++) {				
 				canvas.SetPixel(center.x + x, center.y + y, color);
 				canvas.SetPixel(center.x - x, center.y + y, color);
 				canvas.SetPixel(center.x + x, center.y - y, color);
@@ -35,10 +40,13 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	static void DrawFillAACircle(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
+	void DrawFillAACircle(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
+			if (y >= debugStepLimit) return;
+
 			float dx = Mathf.Sqrt(r2 - (y * y));
+			if (y > dx) return;
 
 			for (int x = 0; x <= dx; x++) {
 				float a = dx - x;
@@ -51,13 +59,20 @@ public class Ex003_DrawCircle : MyShape
 				canvas.BlendPixel(center.x - x, center.y + y, col);
 				canvas.BlendPixel(center.x + x, center.y - y, col);
 				canvas.BlendPixel(center.x - x, center.y - y, col);
+
+				canvas.BlendPixel(center.y + y, center.x + x, col);
+				canvas.BlendPixel(center.y + y, center.x - x, col);
+				canvas.BlendPixel(center.y - y, center.x + x, col);
+				canvas.BlendPixel(center.y - y, center.x - x, col);
 			}
 		}
 	}
 
-	static void DrawNaiveCircleOutline(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
+	void DrawNaiveCircleOutline(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
+			if (y >= debugStepLimit) return;
+
 			float dx = Mathf.Sqrt(r2 - (y * y));
 
 			canvas.SetPixel(center.x + (int)dx, center.y + y, color);
@@ -67,9 +82,11 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	static void DrawCircleOutline(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
+	void DrawCircleOutline(MyCanvas canvas, in Vector2Int center, int radius, in Color color) {
 		int r2 = radius * radius;
 		for (int y = 0; y <= radius; y++) {
+			if (y >= debugStepLimit) return;
+
 			float dx = Mathf.Sqrt(r2 - (y * y));
 
 			if (y >　dx) break;
@@ -87,10 +104,12 @@ public class Ex003_DrawCircle : MyShape
 		}
 	}
 
-	static void DrawCircleAAOutline(MyCanvas canvas, in Vector2Int center, int radius, float antiAliasOutlineWidth, in Color color) {
+	void DrawCircleAAOutline(MyCanvas canvas, in Vector2Int center, int radius, float antiAliasOutlineWidth, in Color color) {
 		int n = radius + Mathf.CeilToInt(antiAliasOutlineWidth);
 
 		for (int y = 0; y <= n; y++) {
+			if (y >= debugStepLimit) return;
+
 			for (int x = 0; x <= n; x++) {
 				float r = Mathf.Sqrt((x * x) + (y * y));
 
