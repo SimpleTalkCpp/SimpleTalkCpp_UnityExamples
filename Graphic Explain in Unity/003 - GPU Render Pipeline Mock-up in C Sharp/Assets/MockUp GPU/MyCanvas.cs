@@ -126,6 +126,43 @@ public class MyCanvas : MonoBehaviour
 		}
 	}
 
+	public void DrawLine(in Vector2 a, in Vector2 b, in Color color) {
+		// Bresenham's line algorithm - https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+
+		int ax = (int)a.x;
+		int ay = (int)a.y;
+
+		int bx = (int)b.x;
+		int by = (int)b.y;
+
+		int dx =  System.Math.Abs(bx - ax);
+		int dy = -System.Math.Abs(by - ay);
+
+		int signX = a.x < b.x ? 1 : -1;
+		int signY = a.y < b.y ? 1 : -1;
+
+		int err = dx + dy;
+
+		int x = ax;
+		int y = ay;
+
+		while (true) {
+			SetPixel(x, y, color);
+			if (x == b.x && y == b.y) break;
+
+			int e2 = 2 * err;
+			if (e2 >= dy) {
+				err += dy;
+				x += signX;
+			}
+
+			if (e2 <= dx) {
+				err += dx;
+				y += signY;
+			}
+		}
+	}
+
 	public float GetDepth(int x, int y) {
 		return _depthBuffer[y * canvasSize.x + x];
 	}

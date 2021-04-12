@@ -7,8 +7,18 @@ public class MyMockupGPU : MyShape
 {
 	public bool wireframe = true;
 
+	public MyShader shader = new MyShader();
+
+	[System.Serializable]
+	public struct DebugInfo {
+		public int vertexShaderCount;
+		public int pixelShaderCount;
+		public int triangleCount;
+	}
+	public DebugInfo debugInfo;
+
 	private void Awake() {
-		Application.targetFrameRate = 30;
+		Application.targetFrameRate = 15;
 	}
 
 
@@ -19,32 +29,31 @@ public class MyMockupGPU : MyShape
 	}
 
 	public override void OnDraw(MyCanvas canvas) {
-		var uniforms = new ShaderParameters();
-		uniforms._WorldSpaceCameraPos = Camera.main.transform.position;
-		uniforms.UNITY_MATRIX_V = Camera.main.transform.worldToLocalMatrix;
-		uniforms.UNITY_MATRIX_P = Camera.main.projectionMatrix;
+		debugInfo = new DebugInfo();
 
-		uniforms._ScreenParams = new Vector4(canvas.canvasSize.x,
-											 canvas.canvasSize.y,
-											 1 + 1f / canvas.canvasSize.x,
-											 1 + 1f / canvas.canvasSize.y);
+		var cam = Camera.main;
+
+		var shaderParams = new MyShader.Parameters();
+		shaderParams.UNITY_MATRIX_V = cam.transform.worldToLocalMatrix;
+
+		{
+			// matrix embeds a z-flip operation whose purpose is to cancel the z-flip performed by the camera view matrix
+			var tmp = cam.projectionMatrix;
+			tmp.SetColumn(2, -tmp.GetColumn(2));
+			shaderParams.UNITY_MATRIX_P = tmp;
+		}
 
 		var rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
 
-		// setup lights
-		foreach (var root in rootObjects) {
-			if (!root.activeInHierarchy) continue;
+		var light = Object.FindObjectOfType<Light>();
+		if (light) {
+			if (light.type == LightType.Directional) {
+				shaderParams._WorldSpaceLightPos0 = -light.transform.forward;
+				shaderParams._WorldSpaceLightPos0.w = 0;
 
-			var lights = root.GetComponentsInChildren<Light>(false);
-			foreach (var light in lights) {
-				if (light.type == LightType.Directional) {
-					uniforms._WorldSpaceLightPos0 = light.transform.forward;
-					uniforms._WorldSpaceLightPos0.w = 0;
-
-				} else {
-					uniforms._WorldSpaceLightPos0 = light.transform.position;
-					uniforms._WorldSpaceLightPos0.w = 1;
-				}
+			} else {
+				shaderParams._WorldSpaceLightPos0 = light.transform.position;
+				shaderParams._WorldSpaceLightPos0.w = 1;
 			}
 		}
 
@@ -54,194 +63,153 @@ public class MyMockupGPU : MyShape
 
 			var renderers = root.GetComponentsInChildren<Renderer>(false);
 			foreach (var renderer in renderers) {
-				draw(canvas, renderer, uniforms);
+				draw(canvas, renderer, shaderParams);
 			}
 		}
 	}
 
-	void draw(MyCanvas canvas, Renderer renderer, ShaderParameters uniforms) {
-		uniforms.unity_ObjectToWorld = renderer.transform.localToWorldMatrix;
-		uniforms.unity_WorldToObject = renderer.transform.worldToLocalMatrix;
+	void draw(MyCanvas canvas, Renderer renderer, MyShader.Parameters shaderParams) {
+		shaderParams.unity_ObjectToWorld = renderer.transform.localToWorldMatrix;
+		shaderParams.UNITY_MATRIX_MV  = shaderParams.UNITY_MATRIX_V * shaderParams.unity_ObjectToWorld;
+		shaderParams.UNITY_MATRIX_MVP = shaderParams.UNITY_MATRIX_P * shaderParams.UNITY_MATRIX_MV;
 
-		uniforms.UNITY_MATRIX_MV  = uniforms.UNITY_MATRIX_V * uniforms.unity_ObjectToWorld;
-		uniforms.UNITY_MATRIX_MVP = uniforms.UNITY_MATRIX_P * uniforms.UNITY_MATRIX_V * uniforms.unity_ObjectToWorld;
-
-		uniforms.UNITY_MATRIX_T_MV  = uniforms.UNITY_MATRIX_MV.transpose;
-		uniforms.UNITY_MATRIX_IT_MV = uniforms.UNITY_MATRIX_MV.inverse.transpose;
+		var mtl = renderer.sharedMaterial;
+		if (mtl) {
+			shaderParams.materialColor = mtl.color;
+		}
 
 		var meshRenderer = renderer as MeshRenderer;
 		if (meshRenderer) {
-		 	drawMesh(canvas, meshRenderer, uniforms);
+		 	drawMesh(canvas, meshRenderer, shaderParams);
 			return;
 		}
 	}
 
-	void drawMesh(MyCanvas canvas, MeshRenderer meshRenderer, ShaderParameters uniforms) {
-		var material = meshRenderer.sharedMaterial;
-		if (!material) return;
+	List<int    > _meshIndices  = new List<int>();
+	List<Vector3> _meshVertices = new List<Vector3>();
+	List<Vector3> _meshNormals  = new List<Vector3>();
+	List<Color  > _meshColors   = new List<Color>();
 
+	void drawMesh(MyCanvas canvas, MeshRenderer meshRenderer, MyShader.Parameters shaderParams) {
 		var meshFilter = meshRenderer.GetComponent<MeshFilter>();
 		if (!meshFilter) return;
 
 		var mesh = meshFilter.sharedMesh;
 		if (!mesh) return;
 
-		var vertices = new List<Vector3>();
-		var normals  = new List<Vector3>();
-		var colors   = new List<Color>();
+		mesh.GetVertices(_meshVertices);
+		mesh.GetNormals(_meshNormals);
+		mesh.GetColors(_meshColors);
 
-		List<int> indices = new List<int>();
+		MyShader.VsOutput handleVertex(int vertexIndex) {
+			var vsInput		= new MyShader.VsInput();
+			vsInput.vertex		= _meshVertices[vertexIndex];
+			vsInput.normal	= vertexIndex < _meshNormals.Count ? _meshNormals[vertexIndex] : Vector3.zero; 
+			vsInput.color   = vertexIndex < _meshColors.Count  ? _meshColors[vertexIndex]  : Color.white;
 
-		mesh.GetVertices(vertices);
-		mesh.GetNormals(normals);
-		mesh.GetColors(colors);
+			debugInfo.vertexShaderCount++;
+			var o = shader.vertexShader(vsInput, shaderParams);
+			if (!Mathf.Approximately(o.vertex.w, 0)) {
+				o.vertex /= o.vertex.w;
+			}
 
-		VSOutput handleVertex(int vertexIndex) {
-			var vsInput		= new VSInput();
-			vsInput.pos		= vertices[vertexIndex];
-			vsInput.normal	= vertexIndex < normals.Count ? normals[vertexIndex] : Vector3.zero; 
-			vsInput.color   = vertexIndex < colors.Count  ? colors[vertexIndex]  : Color.white;
+			o.vertex.z = (o.vertex.z + 1) * 0.5f; // [-1 ~ +1] => [0 ~ 1]
 
-			// semantic: NORMAL
-			vsInput.normal = uniforms.unity_ObjectToWorld.MultiplyVector(vsInput.normal);
-
-			var o = vertexShader(vsInput, uniforms, material);
-			o.pos = Mathf.Approximately(o.pos.w, 0) ? Vector4.zero : (o.pos / o.pos.w);
-
-			o._screenPos = new Vector2Int((int)((1 - o.pos.x) * 0.5f * canvas.canvasSize.x),
-										  (int)((1 + o.pos.y) * 0.5f * canvas.canvasSize.y));
+//			Debug.Log($"pos[{vertexIndex}] = {o.pos} {o.pos.z:0.0000000} {o.color}");
+			o._screenPos = new Vector2Int((int)((1 + o.vertex.x) * 0.5f * canvas.canvasSize.x),
+										  (int)((1 - o.vertex.y) * 0.5f * canvas.canvasSize.y));
 			return o;
 		}
 
 		for (int sub = 0; sub < mesh.subMeshCount; sub++) {
-			mesh.GetIndices(indices, sub, true);
+			mesh.GetIndices(_meshIndices, sub, true);
 
-			int triCount = indices.Count / 3;
+			int triCount = _meshIndices.Count / 3;
 			for (int tri = 0; tri < triCount; tri++) {
 				int i = tri * 3;
 
-				var v0 = handleVertex(indices[i]);
-				var v1 = handleVertex(indices[i+1]);
-				var v2 = handleVertex(indices[i+2]);
+				var v0 = handleVertex(_meshIndices[i]);
+				var v1 = handleVertex(_meshIndices[i+1]);
+				var v2 = handleVertex(_meshIndices[i+2]);
 
 				if (wireframe) {
-					DrawBresenhamLine(canvas, v0._screenPos, v1._screenPos, Color.red);
-					DrawBresenhamLine(canvas, v1._screenPos, v2._screenPos, Color.red);
-					DrawBresenhamLine(canvas, v2._screenPos, v0._screenPos, Color.red);
+					canvas.DrawLine(v0._screenPos, v1._screenPos, Color.red);
+					canvas.DrawLine(v1._screenPos, v2._screenPos, Color.red);
+					canvas.DrawLine(v2._screenPos, v0._screenPos, Color.red);
 
 				} else {
-					var v01 = v0.pos - v1.pos;
-					var v02 = v0.pos - v2.pos;
+			
+					var v01 = v0.vertex - v1.vertex;
+					var v02 = v0.vertex - v2.vertex;
 
 					var faceDirection = Vector3.Dot(Vector3.Cross(v02, v01), Vector3.forward);
-					if (faceDirection > 0) {
-						DrawTriangle(canvas, v0, v1, v2, uniforms, material, true);
-					}
+					if (shader.cull == MyShader.Cull.Back  && faceDirection < 0) continue;
+					if (shader.cull == MyShader.Cull.Front && faceDirection > 0) continue;
+
+					debugInfo.triangleCount++;
+					DrawTriangle(canvas, v0, v1, v2, shaderParams, true);
 				}
 			}
 		}
 	}
 
-	static void DrawBresenhamLine(MyCanvas canvas, in Vector2 a, in Vector2 b, in Color color) {
-		// Bresenham's line algorithm - https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
-
-		int ax = (int)a.x;
-		int ay = (int)a.y;
-
-		int bx = (int)b.x;
-		int by = (int)b.y;
-
-		int dx =  System.Math.Abs(bx - ax);
-		int dy = -System.Math.Abs(by - ay);
-
-		int signX = a.x < b.x ? 1 : -1;
-		int signY = a.y < b.y ? 1 : -1;
-
-		int err = dx + dy;
-
-		int x = ax;
-		int y = ay;
-
-		while (true) {
-			canvas.SetPixel(x, y, color);
-			if (x == b.x && y == b.y) break;
-
-			int e2 = 2 * err;
-			if (e2 >= dy) {
-				err += dy;
-				x += signX;
-			}
-
-			if (e2 <= dx) {
-				err += dx;
-				y += signY;
-			}
-		}
-	}
-
-	void DrawTriangle(MyCanvas canvas, in VSOutput v0, in VSOutput v1, in VSOutput v2, in ShaderParameters uniforms, Material material, bool reorder) {
+	void DrawTriangle(	MyCanvas canvas, 
+						in MyShader.VsOutput v0, 
+						in MyShader.VsOutput v1, 
+						in MyShader.VsOutput v2, 
+						in MyShader.Parameters shaderParams,
+						bool reorder)
+	{
 		var a = v0._screenPos;
 		var b = v1._screenPos;
 		var c = v2._screenPos;
 
-		int canvasWidth  = canvas.canvasSize.x;
-		int canvasHeight = canvas.canvasSize.y;
-
-		// out of screen test
-		if (a.x < 0   && b.x < 0   && c.x < 0  ) return;
-		if (a.x >= canvasWidth && b.x >= canvasWidth && c.x >= canvasWidth) return;
-
-		if (a.y < 0   && b.y < 0   && c.y < 0  ) return;
-		if (a.y >= canvasHeight && b.y >= canvasHeight && c.y >= canvasHeight) return;
-
-		//if (v0.pos.z < 0 && v1.pos.z < 0   && v2.pos.z < 0) return;
-		//if (v0.pos.z > 1 && v1.pos.z > 1   && v2.pos.z > 1) return;
-
+		// re-order vertices by Y axis
 		if (reorder) {
-			// re-order vertices by Y axis
 			if (c.y < a.y && c.y < b.y) {
 				if (a.y < b.y) {
-					DrawTriangle(canvas, v2, v0, v1, uniforms, material, false);
+					DrawTriangle(canvas, v2, v0, v1, shaderParams, false);
 				} else {
-					DrawTriangle(canvas, v2, v1, v0, uniforms, material, false);
+					DrawTriangle(canvas, v2, v1, v0, shaderParams, false);
 				}
 				return;
 			}
 
 			if (b.y < a.y && b.y < c.y) {
 				if (a.y < c.y) {
-					DrawTriangle(canvas, v1, v0, v2, uniforms, material, false);
+					DrawTriangle(canvas, v1, v0, v2, shaderParams, false);
 				} else {
-					DrawTriangle(canvas, v1, v2, v0, uniforms, material, false);
+					DrawTriangle(canvas, v1, v2, v0, shaderParams, false);
 				}
 				return;
 			}
 
 			if (c.y < b.y) {
-				DrawTriangle(canvas, v0, v2, v1, uniforms, material, false);
+				DrawTriangle(canvas, v0, v2, v1, shaderParams, false);
 				return;
 			}
 		}
 
-		VSOutput psInput = v0;
-
-		if (b.y == c.y) {
-			_DrawFlatTrangle(canvas, v0, v1, v2, uniforms, material);
-
-		} else if (a.y == b.y) {
-			_DrawFlatTrangle(canvas, v2, v0, v1, uniforms, material);
-
-		} else {
-			var midX = lineIntersect(a, c, b.y);
-			var ratio = (float)(midX - a.x) / (c.x - a.x);
-			var mid = VSOutput.Lerp(v0, v2, ratio);
-
-			mid._screenPos.x = Mathf.RoundToInt(lineIntersect(a, c, b.y));
-			mid._screenPos.y = b.y;
-
-			_DrawFlatTrangle(canvas, v0, mid, v1, uniforms, material);
-			_DrawFlatTrangle(canvas, v2, mid, v1, uniforms, material);
+		if (b.y == c.y) { // only top triangle
+			_DrawFlatTrangle(canvas, v0, v1, v2, shaderParams);
+			return;
 		}
+		
+		if (a.y == b.y) { // only bottom triangle
+			_DrawFlatTrangle(canvas, v2, v0, v1, shaderParams);
+			return;
+		}
+		
+		var midX = lineIntersect(a, c, b.y);
+
+		var ratio = (float)(b.y - a.y) / (c.y - a.y);
+		var mid = MyShader.VsOutput.Lerp(v0, v2, ratio);
+
+		mid._screenPos.x = (int)lineIntersect(a, c, b.y);
+		mid._screenPos.y = b.y;
+
+		_DrawFlatTrangle(canvas, v0, mid, v1, shaderParams);
+		_DrawFlatTrangle(canvas, v2, mid, v1, shaderParams);
 	}
 
 	float lineIntersect(in Vector2 a, in Vector2 b, float y) {
@@ -252,13 +220,13 @@ public class MyMockupGPU : MyShape
 		return (y - a.y) * (float)dx/dy + a.x;
 	}
 
-	void _DrawFlatTrangle(MyCanvas canvas, in VSOutput v0, in VSOutput v1, in VSOutput v2, in ShaderParameters uniforms, Material material) {
+	void _DrawFlatTrangle(MyCanvas canvas, in MyShader.VsOutput v0, in MyShader.VsOutput v1, in MyShader.VsOutput v2, in MyShader.Parameters shaderParams) {
 		var a = v0._screenPos;
 		var b = v1._screenPos;
 		var c = v2._screenPos;
 	
 		if (c.x < b.x) {
-			_DrawFlatTrangle(canvas, v0, v2, v1, uniforms, material);
+			_DrawFlatTrangle(canvas, v0, v2, v1, shaderParams);
 			return;
 		}
 
@@ -266,74 +234,61 @@ public class MyMockupGPU : MyShape
 			Debug.LogError("");
 		}
 
-		int dy = Mathf.CeilToInt(b.y - a.y);
-		int step = 1;
+		int dy = (int)(b.y - a.y);
+		int ySign = 1;
 		if (dy < 0) {
 			dy = -dy;
-			step = -1;
+			ySign = -1;
 		}
 
 		int canvasWidth  = canvas.canvasSize.x;
 		int canvasHeight = canvas.canvasSize.y;
 
 		for (int i = 0; i <= dy; i++) {
-			int y = (int)a.y + i * step;
+			int y = (int)a.y + i * ySign;
 
 			if (y < 0 || y >= canvasHeight) continue;
 
-			var start = Mathf.FloorToInt(lineIntersect(a, b, y));
-			var end   = Mathf.CeilToInt (lineIntersect(a, c, y));
-
-			var barycentric = new Vector2(0, (float)i/dy);
+			var start = (int)lineIntersect(a, b, y);
+			var end   = (int)lineIntersect(a, c, y);
 
 			for (int x = start; x <= end; x++) {
 				if (x < 0 || x >= canvasWidth) continue;
 
-				barycentric.x = (float)(x - start) / (end - start);
+				var barycentric = new Vector2(0, (float)i/dy);
 
-				var ps01 = VSOutput.Lerp(v0, v1, barycentric.y);
-				var ps02 = VSOutput.Lerp(v0, v2, barycentric.y);
-				var psInput = VSOutput.Lerp(ps01, ps02, barycentric.x);
+				if (end != start) {
+					barycentric.x = (float)(x - start) / (end - start);
+				}
 
-				// depth test
+				var ps01    = MyShader.VsOutput.Lerp(v0,   v1,   barycentric.y);
+				var ps02    = MyShader.VsOutput.Lerp(v0,   v2,   barycentric.y);
+				var psInput = MyShader.VsOutput.Lerp(ps01, ps02, barycentric.x);
+
 				float depth = canvas.GetDepth(x, y);
-				float newDepth = psInput.pos.z;
+				float newDepth = psInput.vertex.z;
 
-//				if (newDepth < -1 || newDepth > 1) continue;
-//				if (newDepth > depth) continue;
+				if (newDepth < 0 || newDepth > 1) continue;
 
-				canvas.SetDepth(x, y, newDepth);
+				switch (shader.depthTestFunc) {
+					case MyShader.DepthTestFunc.Less:		if (newDepth > depth) continue; break;
+					case MyShader.DepthTestFunc.Greater:	if (newDepth < depth) continue; break;
+				}
+				
+				debugInfo.pixelShaderCount++;
+				var col = shader.pixelShader(psInput, shaderParams);
 
-				var col = pixelShader(psInput, uniforms, material);
+				if (shader.depthWrite) {
+					canvas.SetDepth(x, y, newDepth);
+				}
+
+				col.r = Mathf.Clamp01(col.r);
+				col.g = Mathf.Clamp01(col.g);
+				col.b = Mathf.Clamp01(col.b);
+				col.a = Mathf.Clamp01(col.a);
+
 				canvas.BlendPixel(x, y, col);
 			}
 		}
-	}
-
-	VSOutput vertexShader(in VSInput input, in ShaderParameters uniforms, Material material) {
-		var o = new VSOutput();
-		Vector4 pos = input.pos;
-		pos.w = 1;
-		
-		o.pos = uniforms.UNITY_MATRIX_MVP * pos;
-		o.worldPos = uniforms.unity_ObjectToWorld.MultiplyPoint(input.pos);
-		o.normal = input.normal;
-		o.color = input.color;
-		return o;
-	}
-
-	Color pixelShader(VSOutput input, in ShaderParameters uniforms, Material material) {
-		var light = Mathf.Clamp01(Vector3.Dot(input.normal, -uniforms._WorldSpaceLightPos0));
-		light = Mathf.Max(0, light);
-
-		var o = input.color * light;
-		o.a = 1;
-
-		float depth = input.pos.z;
-		o.r = depth;
-		o.g = depth;
-		o.b = depth;
-
-		return o;
 	}
 }
