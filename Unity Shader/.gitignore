@@ -1,4 +1,7 @@
 /Assembly-CSharp-Editor.csproj
 /Assembly-CSharp.csproj
 /.vscode
-/Packages
+/.vs
+/Library
+/Logs
+/obj
