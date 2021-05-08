@@ -4,34 +4,28 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: 004 - Magnets
   m_Shader: {fileID: 4800000, guid: c41d4cc6035e4c4459adb4e11c5d8f1c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-    - first:
-        name: testTex
-      second:
+    - testTex:
         m_Texture: {fileID: 2800000, guid: bf73d3661d22c0b48a2d412c3b0b9628, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - first:
-        name: radius
-      second: 0.48
-    - first:
-        name: testFloat
-      second: 0.943
+    - radius: 1.21
+    - testFloat: 0.943
     m_Colors:
-    - first:
-        name: locator
-      second: {r: -0.367, g: 1.411, b: -0.208, a: 1}
-    - first:
-        name: myLocator
-      second: {r: -2.905, g: 1.382, b: 0.12, a: 1}
+    - locator: {r: -0.367, g: 1.411, b: -0.208, a: 1}
+    - myLocator: {r: 0.196, g: 0.72, b: 1.794, a: 1}
